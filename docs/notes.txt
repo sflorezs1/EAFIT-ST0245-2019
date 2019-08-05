@@ -1,4 +1,4 @@
- roya
+ La roya
 	Variables a tener en cuenta:	
 		Iluminación
 		Temperatura ambiental
