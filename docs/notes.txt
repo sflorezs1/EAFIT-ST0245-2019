@@ -1,0 +1,10 @@
+ roya
+	Variables a tener en cuenta:	
+		Iluminación
+		Temperatura ambiental
+		Humedad del suelo
+		Humedad ambiental
+		Temperatura del suelo
+		Ph del suelo
+		Etiqueta del experto
+		*Variables dependientes del tiempo.*
