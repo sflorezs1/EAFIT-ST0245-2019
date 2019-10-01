@@ -13,17 +13,17 @@ class CoffeePlant(Plant):
         self.env_humidity = env_humidity
         self.label = label
 
-    def to_string(self) -> str:
+    def __str__(self) -> str:
         return "Coffee Plant{" + \
-            "Ph: " + self.ph + \
-            "Soil{" + \
-            "Temperature: " + self.soil_temperature + \
-            ", Moisture: " + self.soil_moisture + \
+            "Ph: " + str(self.ph) + \
+            ", Soil{" + \
+            "Temperature: " + str(self.soil_temperature) + \
+            ", Moisture: " + str(self.soil_moisture) + \
             "}" + \
-            ", Illuminance: " + self.illuminance + \
+            ", Illuminance: " + str(self.illuminance) + \
             ", Environment{" + \
-            "Temperature: " + self.env_temperature + \
-            ", Humidity: " + self.env_humidity + \
+            "Temperature: " + str(self.env_temperature) + \
+            ", Humidity: " + str(self.env_humidity) + \
             "}" + \
-            ", Label: " + "yes" if self.label else "no" + \
+            ", Label: " + ("yes" if self.label else "no") + \
             "}"

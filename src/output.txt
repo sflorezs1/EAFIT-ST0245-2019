@@ -1,0 +1,566 @@
+['ph', 'soil_temperature', 'soil_moisture', 'illuminance', 'env_temperature', 'env_humidity', 'label']
+Is soil_moisture == 49.28?
+--> True:
+ Predict {'yes': 7}
+--> False:
+ Is soil_moisture == 51.81?
+ --> True:
+  Predict {'yes': 4}
+ --> False:
+  Is soil_moisture == 29.71?
+  --> True:
+   Predict {'yes': 4}
+  --> False:
+   Is soil_moisture == 49.64?
+   --> True:
+    Predict {'yes': 4}
+   --> False:
+    Is soil_moisture == 61.23?
+    --> True:
+     Predict {'yes': 4}
+    --> False:
+     Is soil_moisture == 53.26?
+     --> True:
+      Predict {'yes': 4}
+     --> False:
+      Is soil_moisture == 48.91?
+      --> True:
+       Predict {'yes': 4}
+      --> False:
+       Is ph == 7.79?
+       --> True:
+        Predict {'yes': 4}
+       --> False:
+        Is soil_moisture == 52.9?
+        --> True:
+         Is env_temperature == 35.0?
+         --> True:
+          Predict {'no': 1}
+         --> False:
+          Predict {'yes': 5}
+        --> False:
+         Is soil_moisture == 56.88?
+         --> True:
+          Is env_humidity == 67.0?
+          --> True:
+           Predict {'no': 1}
+          --> False:
+           Predict {'yes': 5}
+         --> False:
+          Is soil_moisture == 28.26?
+          --> True:
+           Is env_humidity == 97.0?
+           --> True:
+            Predict {'no': 1}
+           --> False:
+            Predict {'yes': 5}
+          --> False:
+           Is soil_moisture == 61.59?
+           --> True:
+            Predict {'yes': 3}
+           --> False:
+            Is soil_moisture == 62.68?
+            --> True:
+             Predict {'yes': 3}
+            --> False:
+             Is soil_moisture == 54.71?
+             --> True:
+              Predict {'yes': 3}
+             --> False:
+              Is soil_moisture == 61.96?
+              --> True:
+               Predict {'yes': 3}
+              --> False:
+               Is ph == 7.52?
+               --> True:
+                Predict {'yes': 3}
+               --> False:
+                Is env_humidity == 64.0?
+                --> True:
+                 Is env_temperature == 27.0?
+                 --> True:
+                  Predict {'no': 1}
+                 --> False:
+                  Predict {'yes': 4}
+                --> False:
+                 Is soil_moisture == 27.9?
+                 --> True:
+                  Is env_humidity == 36.0?
+                  --> True:
+                   Predict {'no': 1}
+                  --> False:
+                   Predict {'yes': 4}
+                 --> False:
+                  Is soil_moisture == 47.46?
+                  --> True:
+                   Is env_humidity == 41.0?
+                   --> True:
+                    Predict {'no': 1}
+                   --> False:
+                    Predict {'yes': 4}
+                  --> False:
+                   Is soil_moisture == 57.97?
+                   --> True:
+                    Is env_temperature == 28.0?
+                    --> True:
+                     Predict {'no': 1}
+                    --> False:
+                     Predict {'yes': 4}
+                   --> False:
+                    Is soil_moisture == 56.52?
+                    --> True:
+                     Is env_humidity == 35.0?
+                     --> True:
+                      Predict {'no': 1}
+                     --> False:
+                      Is env_temperature == 24.0?
+                      --> True:
+                       Predict {'no': 1}
+                      --> False:
+                       Predict {'yes': 5}
+                    --> False:
+                     Is soil_moisture == 48.19?
+                     --> True:
+                      Is env_humidity == 99.0?
+                      --> True:
+                       Is env_temperature == 24.0?
+                       --> True:
+                        Predict {'yes': 1}
+                       --> False:
+                        Predict {'no': 2}
+                      --> False:
+                       Predict {'yes': 4}
+                     --> False:
+                      Is soil_moisture == 50.72?
+                      --> True:
+                       Is env_temperature == 17.0?
+                       --> True:
+                        Predict {'no': 1}
+                       --> False:
+                        Predict {'yes': 4}
+                      --> False:
+                       Is soil_moisture == 57.61?
+                       --> True:
+                        Is env_humidity == 84.0?
+                        --> True:
+                         Predict {'no': 1}
+                        --> False:
+                         Predict {'yes': 4}
+                       --> False:
+                        Is soil_moisture == 55.07?
+                        --> True:
+                         Is env_humidity == 89.0?
+                         --> True:
+                          Predict {'no': 1}
+                         --> False:
+                          Predict {'yes': 4}
+                        --> False:
+                         Is env_temperature == 18.0?
+                         --> True:
+                          Predict {'no': 24}
+                         --> False:
+                          Is soil_moisture == 58.7?
+                          --> True:
+                           Predict {'yes': 3}
+                          --> False:
+                           Is ph == 6.41?
+                           --> True:
+                            Predict {'yes': 3}
+                           --> False:
+                            Is soil_moisture == 50.36?
+                            --> True:
+                             Is env_humidity == 99.0?
+                             --> True:
+                              Predict {'no': 1}
+                             --> False:
+                              Predict {'yes': 4}
+                            --> False:
+                             Is illuminance == 1258.0?
+                             --> True:
+                              Predict {'yes': 2}
+                             --> False:
+                              Is soil_moisture == 51.45?
+                              --> True:
+                               Predict {'yes': 2}
+                              --> False:
+                               Is soil_moisture == 53.99?
+                               --> True:
+                                Is env_humidity == 44.0?
+                                --> True:
+                                 Predict {'no': 1}
+                                --> False:
+                                 Is env_temperature == 20.0?
+                                 --> True:
+                                  Predict {'no': 1}
+                                 --> False:
+                                  Predict {'yes': 4}
+                               --> False:
+                                Is soil_moisture == 60.51?
+                                --> True:
+                                 Predict {'yes': 2}
+                                --> False:
+                                 Is soil_moisture == 29.35?
+                                 --> True:
+                                  Predict {'yes': 2}
+                                 --> False:
+                                  Is soil_moisture == 50.0?
+                                  --> True:
+                                   Predict {'yes': 2}
+                                  --> False:
+                                   Is soil_moisture == 63.04?
+                                   --> True:
+                                    Predict {'yes': 2}
+                                   --> False:
+                                    Is soil_moisture == 63.41?
+                                    --> True:
+                                     Predict {'yes': 2}
+                                    --> False:
+                                     Is ph == 7.34?
+                                     --> True:
+                                      Predict {'yes': 2}
+                                     --> False:
+                                      Is ph == 7.24?
+                                      --> True:
+                                       Predict {'yes': 2}
+                                      --> False:
+                                       Is ph == 6.77?
+                                       --> True:
+                                        Predict {'yes': 2}
+                                       --> False:
+                                        Is env_humidity == 93.0?
+                                        --> True:
+                                         Is illuminance == 7231.0?
+                                         --> True:
+                                          Predict {'no': 1}
+                                         --> False:
+                                          Predict {'yes': 3}
+                                        --> False:
+                                         Is soil_moisture == 59.42?
+                                         --> True:
+                                          Is env_humidity == 59.0?
+                                          --> True:
+                                           Predict {'no': 1}
+                                          --> False:
+                                           Predict {'yes': 3}
+                                         --> False:
+                                          Is soil_moisture == 65.58?
+                                          --> True:
+                                           Is env_humidity == 40.0?
+                                           --> True:
+                                            Predict {'no': 1}
+                                           --> False:
+                                            Predict {'yes': 3}
+                                          --> False:
+                                           Is soil_moisture == 31.88?
+                                           --> True:
+                                            Is env_humidity == 90.0?
+                                            --> True:
+                                             Predict {'no': 1}
+                                            --> False:
+                                             Predict {'yes': 3}
+                                           --> False:
+                                            Is soil_moisture == 28.62?
+                                            --> True:
+                                             Is env_humidity == 99.0?
+                                             --> True:
+                                              Predict {'no': 1}
+                                             --> False:
+                                              Predict {'yes': 3}
+                                            --> False:
+                                             Is soil_moisture == 44.57?
+                                             --> True:
+                                              Is env_humidity == 53.0?
+                                              --> True:
+                                               Predict {'no': 1}
+                                              --> False:
+                                               Predict {'yes': 3}
+                                             --> False:
+                                              Is soil_moisture == 60.14?
+                                              --> True:
+                                               Is env_temperature == 20.0?
+                                               --> True:
+                                                Predict {'no': 1}
+                                               --> False:
+                                                Predict {'yes': 3}
+                                              --> False:
+                                               Is soil_moisture == 59.78?
+                                               --> True:
+                                                Is env_temperature == 22.0?
+                                                --> True:
+                                                 Predict {'no': 1}
+                                                --> False:
+                                                 Predict {'yes': 3}
+                                               --> False:
+                                                Is soil_moisture == 48.55?
+                                                --> True:
+                                                 Is env_humidity == 99.0?
+                                                 --> True:
+                                                  Predict {'no': 1}
+                                                 --> False:
+                                                  Is env_humidity == 41.0?
+                                                  --> True:
+                                                   Predict {'no': 1}
+                                                  --> False:
+                                                   Predict {'yes': 3}
+                                                --> False:
+                                                 Is soil_moisture == 57.25?
+                                                 --> True:
+                                                  Is env_temperature == 17.0?
+                                                  --> True:
+                                                   Predict {'no': 1}
+                                                  --> False:
+                                                   Is illuminance == 981.0?
+                                                   --> True:
+                                                    Predict {'no': 1}
+                                                   --> False:
+                                                    Predict {'yes': 3}
+                                                 --> False:
+                                                  Is env_temperature == 39.0?
+                                                  --> True:
+                                                   Is illuminance == 4153.0?
+                                                   --> True:
+                                                    Predict {'no': 1}
+                                                   --> False:
+                                                    Predict {'yes': 2}
+                                                  --> False:
+                                                   Is soil_moisture == 44.93?
+                                                   --> True:
+                                                    Is env_humidity == 86.0?
+                                                    --> True:
+                                                     Predict {'no': 1}
+                                                    --> False:
+                                                     Predict {'yes': 2}
+                                                   --> False:
+                                                    Is soil_moisture == 52.17?
+                                                    --> True:
+                                                     Is env_humidity == 84.0?
+                                                     --> True:
+                                                      Predict {'no': 1}
+                                                     --> False:
+                                                      Predict {'yes': 2}
+                                                    --> False:
+                                                     Is soil_moisture == 45.65?
+                                                     --> True:
+                                                      Is env_humidity == 51.0?
+                                                      --> True:
+                                                       Predict {'no': 1}
+                                                      --> False:
+                                                       Predict {'yes': 2}
+                                                     --> False:
+                                                      Is soil_moisture == 30.07?
+                                                      --> True:
+                                                       Is env_humidity == 27.0?
+                                                       --> True:
+                                                        Predict {'no': 1}
+                                                       --> False:
+                                                        Predict {'yes': 2}
+                                                      --> False:
+                                                       Is soil_temperature == 25.5?
+                                                       --> True:
+                                                        Is env_humidity == 37.0?
+                                                        --> True:
+                                                         Predict {'no': 1}
+                                                        --> False:
+                                                         Predict {'yes': 2}
+                                                       --> False:
+                                                        Is ph == 6.33?
+                                                        --> True:
+                                                         Is env_temperature == 19.0?
+                                                         --> True:
+                                                          Predict {'no': 1}
+                                                         --> False:
+                                                          Predict {'yes': 2}
+                                                        --> False:
+                                                         Is soil_moisture == 31.52?
+                                                         --> True:
+                                                          Is env_temperature == 17.0?
+                                                          --> True:
+                                                           Predict {'no': 2}
+                                                          --> False:
+                                                           Is env_humidity == 90.0?
+                                                           --> True:
+                                                            Predict {'no': 1}
+                                                           --> False:
+                                                            Predict {'yes': 3}
+                                                         --> False:
+                                                          Is illuminance == 4857.0?
+                                                          --> True:
+                                                           Predict {'yes': 1}
+                                                          --> False:
+                                                           Is illuminance == 1345.0?
+                                                           --> True:
+                                                            Predict {'yes': 1}
+                                                           --> False:
+                                                            Is illuminance == 1974.0?
+                                                            --> True:
+                                                             Predict {'yes': 1}
+                                                            --> False:
+                                                             Is illuminance == 1275.0?
+                                                             --> True:
+                                                              Predict {'yes': 1}
+                                                             --> False:
+                                                              Is illuminance == 2149.0?
+                                                              --> True:
+                                                               Predict {'yes': 1}
+                                                              --> False:
+                                                               Is illuminance == 1292.0?
+                                                               --> True:
+                                                                Predict {'yes': 1}
+                                                               --> False:
+                                                                Is illuminance == 2032.0?
+                                                                --> True:
+                                                                 Predict {'yes': 1}
+                                                                --> False:
+                                                                 Is illuminance == 4983.0?
+                                                                 --> True:
+                                                                  Predict {'yes': 1}
+                                                                 --> False:
+                                                                  Is illuminance == 942.0?
+                                                                  --> True:
+                                                                   Predict {'yes': 1}
+                                                                  --> False:
+                                                                   Is illuminance == 1204.0?
+                                                                   --> True:
+                                                                    Predict {'yes': 1}
+                                                                   --> False:
+                                                                    Is illuminance == 2154.0?
+                                                                    --> True:
+                                                                     Predict {'yes': 1}
+                                                                    --> False:
+                                                                     Is illuminance == 5437.0?
+                                                                     --> True:
+                                                                      Predict {'yes': 1}
+                                                                     --> False:
+                                                                      Is illuminance == 2139.0?
+                                                                      --> True:
+                                                                       Predict {'yes': 1}
+                                                                      --> False:
+                                                                       Is illuminance == 2111.0?
+                                                                       --> True:
+                                                                        Predict {'yes': 1}
+                                                                       --> False:
+                                                                        Is illuminance == 3678.0?
+                                                                        --> True:
+                                                                         Predict {'yes': 1}
+                                                                        --> False:
+                                                                         Is illuminance == 1449.0?
+                                                                         --> True:
+                                                                          Predict {'yes': 1}
+                                                                         --> False:
+                                                                          Is illuminance == 3625.0?
+                                                                          --> True:
+                                                                           Predict {'yes': 1}
+                                                                          --> False:
+                                                                           Is illuminance == 14744.0?
+                                                                           --> True:
+                                                                            Predict {'yes': 1}
+                                                                           --> False:
+                                                                            Is illuminance == 4396.0?
+                                                                            --> True:
+                                                                             Predict {'yes': 1}
+                                                                            --> False:
+                                                                             Is illuminance == 5207.0?
+                                                                             --> True:
+                                                                              Predict {'yes': 1}
+                                                                             --> False:
+                                                                              Is illuminance == 11685.0?
+                                                                              --> True:
+                                                                               Predict {'yes': 1}
+                                                                              --> False:
+                                                                               Is illuminance == 3404.0?
+                                                                               --> True:
+                                                                                Predict {'yes': 1}
+                                                                               --> False:
+                                                                                Is illuminance == 2467.0?
+                                                                                --> True:
+                                                                                 Predict {'yes': 1}
+                                                                                --> False:
+                                                                                 Is illuminance == 1638.0?
+                                                                                 --> True:
+                                                                                  Predict {'yes': 1}
+                                                                                 --> False:
+                                                                                  Is illuminance == 2192.0?
+                                                                                  --> True:
+                                                                                   Predict {'yes': 1}
+                                                                                  --> False:
+                                                                                   Is illuminance == 1184.0?
+                                                                                   --> True:
+                                                                                    Predict {'yes': 1}
+                                                                                   --> False:
+                                                                                    Is illuminance == 2818.0?
+                                                                                    --> True:
+                                                                                     Predict {'yes': 1}
+                                                                                    --> False:
+                                                                                     Is illuminance == 1631.0?
+                                                                                     --> True:
+                                                                                      Predict {'yes': 1}
+                                                                                     --> False:
+                                                                                      Is illuminance == 1044.0?
+                                                                                      --> True:
+                                                                                       Predict {'yes': 1}
+                                                                                      --> False:
+                                                                                       Is illuminance == 1858.0?
+                                                                                       --> True:
+                                                                                        Predict {'yes': 1}
+                                                                                       --> False:
+                                                                                        Is illuminance == 1803.0?
+                                                                                        --> True:
+                                                                                         Predict {'yes': 1}
+                                                                                        --> False:
+                                                                                         Is illuminance == 1960.0?
+                                                                                         --> True:
+                                                                                          Predict {'yes': 1}
+                                                                                         --> False:
+                                                                                          Is illuminance == 4136.0?
+                                                                                          --> True:
+                                                                                           Predict {'yes': 1}
+                                                                                          --> False:
+                                                                                           Is illuminance == 862.0?
+                                                                                           --> True:
+                                                                                            Predict {'yes': 1}
+                                                                                           --> False:
+                                                                                            Is illuminance == 3013.0?
+                                                                                            --> True:
+                                                                                             Predict {'yes': 1}
+                                                                                            --> False:
+                                                                                             Is illuminance == 3388.0?
+                                                                                             --> True:
+                                                                                              Predict {'yes': 1}
+                                                                                             --> False:
+                                                                                              Is illuminance == 3566.0?
+                                                                                              --> True:
+                                                                                               Predict {'yes': 1}
+                                                                                              --> False:
+                                                                                               Is soil_moisture == 64.86?
+                                                                                               --> True:
+                                                                                                Predict {'yes': 1}
+                                                                                               --> False:
+                                                                                                Is soil_moisture == 62.32?
+                                                                                                --> True:
+                                                                                                 Predict {'yes': 1}
+                                                                                                --> False:
+                                                                                                 Is ph == 8.87?
+                                                                                                 --> True:
+                                                                                                  Predict {'yes': 1}
+                                                                                                 --> False:
+                                                                                                  Is ph == 6.0?
+                                                                                                  --> True:
+                                                                                                   Predict {'yes': 1}
+                                                                                                  --> False:
+                                                                                                   Is illuminance == 1431.0?
+                                                                                                   --> True:
+                                                                                                    Is soil_moisture == 65.22?
+                                                                                                    --> True:
+                                                                                                     Predict {'yes': 1}
+                                                                                                    --> False:
+                                                                                                     Predict {'no': 1}
+                                                                                                   --> False:
+                                                                                                    Is illuminance == 4642.0?
+                                                                                                    --> True:
+                                                                                                     Is env_humidity == 99.0?
+                                                                                                     --> True:
+                                                                                                      Predict {'no': 1}
+                                                                                                     --> False:
+                                                                                                      Predict {'yes': 1}
+                                                                                                    --> False:
+                                                                                                     Predict {'no': 379}
