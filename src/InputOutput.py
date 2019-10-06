@@ -1,4 +1,7 @@
+import ast
+
 from Coffee_Plant import CoffeePlant
+from MyCode import Node
 
 
 def line_to_plant(line: str) -> CoffeePlant:
@@ -17,7 +20,7 @@ def gather_data(path: str) -> list:
     try:
         file = open(path, "r")
         plants: list = []
-        file.readline() # to skip header of the file
+        file.readline()  # to skip header of the file
         for line in file:
             plants.append(line_to_plant(line))
     except FileNotFoundError:
@@ -32,7 +35,7 @@ def data_to_training_set(path: str) -> (list, list):
     try:
         file = open(path, "r")
         headers: list = file.readline().rstrip("\n").split(",")
-        data_set: list[list] = [[0] * len(headers)] * (sum(1 for line in open(path)) - 1)
+        data_set: list = [[0] * len(headers)] * (sum(1 for line in open(path)) - 1)
         for row in range(len(data_set)):
             data_set[row] = file.readline().rstrip('\n').split(",")
     except FileNotFoundError:
@@ -42,3 +45,32 @@ def data_to_training_set(path: str) -> (list, list):
         file.close()
         print(headers)
         return headers, data_set[:-1]
+
+
+def serialize(root: Node) -> list:
+    return root.pre_order([])
+
+
+def tree_to_file(root: Node):
+    tree: list = serialize(root)
+
+
+def deserialize(serie: list) -> Node:
+
+    def parse_list() -> list:
+        serie_list: list = ast.literal_eval(serie)
+        serie_list = [n.strip() for n in serie_list]
+        return serie_list
+
+    def build_node(val: str):
+
+
+    pre_order = parse_list()
+
+    root: Node = Node(pre_order[0])
+
+
+    return None
+
+
+

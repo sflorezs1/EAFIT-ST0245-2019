@@ -1,12 +1,9 @@
-from InputOutput import *
+import InputOutput
+
+header, data_set = InputOutput.data_to_training_set("data.csv")
 
 
-header: list
-data_set: list
-header, data_set = data_to_training_set("data.csv")
-
-
-def unique_vals(rows, col):
+def unique_vals(rows, col) -> set:
     return set([row[col] for row in rows])
 
 
@@ -36,7 +33,7 @@ class Question:
         else:
             return val == self.value
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         condition = "=="
         if is_numeric(self.value):
             condition = ">="
@@ -63,16 +60,18 @@ def gini(rows) -> float:
     return impurity
 
 
-def info_gain(left, right, current_uncertainty):
+def info_gain(left, right, current_uncertainty) -> float:
     p: float = float(len(left)) / (len(left) + len(right))
     return current_uncertainty - p * gini(left) - (1 - p) * gini(right)
 
 
 def find_best_split(rows) -> (float, Question):
+
     best_gain: float = 0
     best_question: Question = None
     current_uncertainty: float = gini(rows)
     n_features: int = len(rows[0]) - 1
+
     for col in range(n_features):
 
         values = set([row[col] for row in rows])

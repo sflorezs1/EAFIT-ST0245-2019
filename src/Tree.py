@@ -1,11 +1,12 @@
-from MyCode.Helpers import *
+from MyCode.Helpers import class_counts, find_best_split, partition
 from MyCode.Node import Node
 
 
-class Leaf:
+class Leaf(Node):
 
     def __init__(self, rows):
         self.predictions = class_counts(rows)
+        super().__init__(self.predictions)
 
 
 def build_tree(rows: list):
@@ -21,12 +22,6 @@ def build_tree(rows: list):
     false_branch = build_tree(false_rows)
 
     return Node(question, true_branch, false_branch)
-
-
-"""
-def build_tree_from_list(tree: list):
-    
-"""
 
 
 def print_tree(node: Node, spacing: str = ""):
