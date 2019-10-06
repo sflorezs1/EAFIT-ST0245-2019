@@ -127,7 +127,11 @@ def build_tree(rows: list):
 
 def print_tree(node: Node, spacing: str = ""):
     if isinstance(node, Leaf):
-        print(spacing + "Predict", node.predictions)
+        print(spacing + "Predict: ", node.predictions)
+        return
+
+    if node.left is None or node.right is None:
+        print(spacing + "Predict:", node.data)
         return
 
     print(spacing + str(node.data))
@@ -158,14 +162,14 @@ def deserialize(serie: str) -> Node:
     def build_node(val: str):
         if val.__contains__("{"):
             val = val.strip("{}").replace(' :', '').split(" ")
-            thing: Node = Node(float(val[1]))
-            return node
+            thing: Node = Node(val[0].replace(":", "").strip("\'"))
+            return thing
         else:
-            val.split(" ")
-            item = Node(Question(headers.index(val[1]), val[3]))
+            val = val.split(" ")
+            item = Node(Question(h.index(val[1]), val[3][:-1]))
             return item
 
-    headers, pre_order = parse_list()
+    h, pre_order = parse_list()
 
     root: Node = build_node(pre_order[0])
 
