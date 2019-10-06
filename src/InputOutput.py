@@ -1,6 +1,4 @@
-import ast
 from Coffee_Plant import CoffeePlant
-from MyCode import Node
 
 
 def line_to_plant(line: str) -> CoffeePlant:
@@ -46,32 +44,6 @@ def data_to_training_set(path: str) -> (list, list):
         data_set = [[n.strip() for n in rows] for rows in data_set]
         print(headers)
         return headers, data_set
-
-
-def serialize(root: Node) -> list:
-    return root.pre_order([])
-
-
-def tree_to_file(root: Node):
-    tree: list = serialize(root)
-
-
-def deserialize(serie: list) -> Node:
-
-    def parse_list() -> list:
-        serie_list: list = ast.literal_eval(serie)
-        serie_list = [n.strip() for n in serie_list]
-        return serie_list
-
-    def build_node(val: str):
-        if val.__contains__("{"):
-            return Leaf()
-
-    pre_order = parse_list()
-
-    root: Node = Node(pre_order[0])
-
-    return None
 
 
 

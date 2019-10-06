@@ -1,3 +1,5 @@
+import collections
+
 from InputOutput import data_to_training_set
 from MyCode.Node import Node
 
@@ -103,7 +105,7 @@ def find_best_split(rows) -> (float, Question):
 
 class Leaf(Node):
 
-    def __init__(self, rows):
+    def __init__(self, rows: list):
         self.predictions = class_counts(rows)
         super().__init__(self.predictions)
 
@@ -137,4 +139,45 @@ def print_tree(node: Node, spacing: str = ""):
     print_tree(node.right, spacing + " ")
 
 
+def serialize(root: Node) -> str:
+    return str(header) + "\n" + str(root.in_order([]))
+
+
+def tree_to_file(root: Node):
+    tree: list = serialize(root)
+
+
+def deserialize(serie: str) -> Node:
+
+    def parse_list() -> (list, list):
+        headers = serie.split("\n")[0].strip("[]").split(", ")
+        headers = [n.strip("\'") for n in headers]
+        serie_list = serie.split("\n")[1].strip("[]").split(", ")
+        return headers, serie_list
+
+    def build_node(val: str):
+        if val.__contains__("{"):
+            val = val.strip("{}").replace(' :', '').split(" ")
+            thing: Node = Node(float(val[1]))
+            return node
+        else:
+            val.split(" ")
+            item = Node(Question(headers.index(val[1]), val[3]))
+            return item
+
+    headers, pre_order = parse_list()
+
+    root: Node = build_node(pre_order[0])
+
+    queue, i = collections.deque([root]), 1
+
+    while queue and i < len(pre_order):
+        node = queue.popleft()
+        if node:
+            node.left, node.right = map(
+                build_node, (pre_order[i], pre_order[i + 1]))
+            queue.append(node.left)
+            queue.append(node.right)
+            i += 2
+    return root
 
