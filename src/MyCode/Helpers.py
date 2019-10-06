@@ -44,7 +44,8 @@ class Question:
 
 
 def partition(rows, question) -> (list, list):
-    true_rows, false_rows = [], []
+    true_rows: list = []
+    false_rows: list = []
     for row in rows:
         if question.match(row):
             true_rows.append(row)

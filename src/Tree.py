@@ -1,4 +1,5 @@
-from Helpers import *
+from MyCode.Helpers import *
+from MyCode.Node import Node
 
 
 class Leaf:
@@ -7,15 +8,7 @@ class Leaf:
         self.predictions = class_counts(rows)
 
 
-class DecisionNode:
-
-    def __init__(self, question: Question, true_branch, false_branch):
-        self.question: Question = question
-        self.true_branch = true_branch
-        self.false_branch = false_branch
-
-
-def build_tree(rows):
+def build_tree(rows: list):
     gain, question = find_best_split(rows)
 
     if gain == 0:
@@ -27,18 +20,24 @@ def build_tree(rows):
 
     false_branch = build_tree(false_rows)
 
-    return DecisionNode(question, true_branch, false_branch)
+    return Node(question, true_branch, false_branch)
 
 
-def print_tree(node: DecisionNode, spacing: str = ""):
+"""
+def build_tree_from_list(tree: list):
+    
+"""
+
+
+def print_tree(node: Node, spacing: str = ""):
     if isinstance(node, Leaf):
         print(spacing + "Predict", node.predictions)
         return
 
-    print(spacing + str(node.question))
+    print(spacing + str(node.data))
 
     print(spacing + "--> True:")
-    print_tree(node.true_branch, spacing + " ")
+    print_tree(node.left, spacing + " ")
 
     print(spacing + "--> False:")
-    print_tree(node.false_branch, spacing + " ")
+    print_tree(node.right, spacing + " ")
