@@ -1,5 +1,4 @@
 import ast
-
 from Coffee_Plant import CoffeePlant
 from MyCode import Node
 
@@ -43,8 +42,10 @@ def data_to_training_set(path: str) -> (list, list):
         return None, None
     finally:
         file.close()
+        data_set = data_set[:-1]
+        data_set = [[n.strip() for n in rows] for rows in data_set]
         print(headers)
-        return headers, data_set[:-1]
+        return headers, data_set
 
 
 def serialize(root: Node) -> list:
@@ -63,12 +64,12 @@ def deserialize(serie: list) -> Node:
         return serie_list
 
     def build_node(val: str):
-
+        if val.__contains__("{"):
+            return Leaf()
 
     pre_order = parse_list()
 
     root: Node = Node(pre_order[0])
-
 
     return None
 

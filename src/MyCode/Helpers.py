@@ -1,18 +1,26 @@
-import InputOutput
+from InputOutput import data_to_training_set
+from MyCode.Node import Node
 
-header, data_set = InputOutput.data_to_training_set("data.csv")
+header, data_set = data_to_training_set("data.csv")
 
 
-def unique_vals(rows, col) -> set:
+def unique_vals(rows: list, col: list) -> set:
+    """Find the unique values for a column in a dataset."""
     return set([row[col] for row in rows])
 
 
-def is_numeric(value) -> bool:
+def is_numeric(value: str) -> bool:
+    """Test if a value is numeric."""
+    try:
+        value = float(value)
+    except ValueError:
+        value = value
     return isinstance(value, int) or isinstance(value, float)
 
 
-def class_counts(rows) -> dict:
-    counts = {}
+def class_counts(rows: list) -> dict:
+    """Counts the number of each type of example in a dataset."""
+    counts: dict = {}
     for row in rows:
         label = row[-1]
         if label not in counts:
@@ -40,7 +48,7 @@ class Question:
         return "Is %s %s %s?" % (header[self.column], condition, str(self.value))
 
 
-def partition(rows, question) -> (list, list):
+def partition(rows: list, question: Question) -> (list, list):
     true_rows: list = []
     false_rows: list = []
     for row in rows:
@@ -56,7 +64,7 @@ def gini(rows) -> float:
     impurity: float = 1
     for lbl in counts:
         prob_of_lbl: float = counts[lbl] / float(len(rows))
-        impurity -= prob_of_lbl**2
+        impurity -= prob_of_lbl ** 2
     return impurity
 
 
@@ -91,4 +99,42 @@ def find_best_split(rows) -> (float, Question):
                 best_gain, best_question = gain, question
 
     return best_gain, best_question
+
+
+class Leaf(Node):
+
+    def __init__(self, rows):
+        self.predictions = class_counts(rows)
+        super().__init__(self.predictions)
+
+
+def build_tree(rows: list):
+    gain, question = find_best_split(rows)
+
+    if gain == 0:
+        return Leaf(rows)
+
+    true_rows, false_rows = partition(rows, question)
+
+    true_branch = build_tree(true_rows)
+
+    false_branch = build_tree(false_rows)
+
+    return Node(question, true_branch, false_branch)
+
+
+def print_tree(node: Node, spacing: str = ""):
+    if isinstance(node, Leaf):
+        print(spacing + "Predict", node.predictions)
+        return
+
+    print(spacing + str(node.data))
+
+    print(spacing + "--> True:")
+    print_tree(node.left, spacing + " ")
+
+    print(spacing + "--> False:")
+    print_tree(node.right, spacing + " ")
+
+
 

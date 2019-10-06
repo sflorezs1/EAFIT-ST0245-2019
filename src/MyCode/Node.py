@@ -1,12 +1,3 @@
-from MyCode.Helpers import Question
-
-
-class Decision:
-
-    def __init__(self, question: Question):
-        self.question = question
-
-
 class Node(object):
 
     def __init__(self, d, left=None, right=None):
