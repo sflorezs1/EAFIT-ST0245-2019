@@ -1,9 +1,92 @@
 import collections
 
 from InputOutput import data_to_training_set
-from MyCode.Node import Node
 
 header, data_set = data_to_training_set("data.csv")
+
+
+class Node(object):
+
+    def __init__(self, d, left=None, right=None):
+        self.data = d
+        self.left = left
+        self.right = right
+
+    def insert(self, d):
+        if self.data == d:
+            return False
+        elif d < self.data:
+            if self.left:
+                return self.left.insert(d)
+            else:
+                self.left = Node(d)
+                return True
+        else:
+            if self.right:
+                return self.right.insert(d)
+            else:
+                self.right = Node(d)
+                return True
+
+    def find(self, d):
+        if self.data == d:
+            return True
+        elif d < self.data and self.left:
+            return self.left.find(d)
+        else:
+            return self.right.find(d)
+        return False
+
+    def pre_order(self, l: list):
+        """
+        :param l: the list of data objects so far in the traversal
+        :return:
+        """
+        l.append(self.data)
+        if self.left:
+            self.left.pre_order(l)
+        if self.right:
+            self.right.pre_order(l)
+        return l
+
+    def in_order(self, l: list):
+        """
+        :param l: the list of data objects so far in the traversal
+        :return:
+        """
+        if self.left:
+            self.left.pre_order(l)
+        l.append(self.data)
+        if self.right:
+            self.right.pre_order(l)
+        return l
+
+    def post_order(self, l: list):
+        """
+        :param l: the list of data objects so far in the traversal
+        :return:
+        """
+        if self.left:
+            self.left.pre_order(l)
+        if self.right:
+            self.right.pre_order(l)
+        l.append(self.data)
+        return l
+
+    def ask(self, sample: list) -> bool:
+        if isinstance(self.data, Question):
+            test = sample[self.data.column]
+            head = header[self.data.column]
+            vs = float(self.data.value)
+            if sample[self.data.column] >= float(self.data.value):
+                return self.left.ask(sample)
+            else:
+                return self.right.ask(sample)
+        else:
+            if isinstance(self.data, dict):
+                data = self.data.popitem()[0]
+                return data.__contains__('yes')
+            return self.data.__contains__('yes')
 
 
 def unique_vals(rows: list, col: list) -> set:
@@ -127,24 +210,30 @@ def build_tree(rows: list):
 
 def print_tree(node: Node, spacing: str = ""):
     if isinstance(node, Leaf):
-        print(spacing + "Predict: ", node.predictions)
+        print(spacing[:-1] + "  └Predict:", node.predictions)
         return
 
     if node.left is None or node.right is None:
-        print(spacing + "Predict:", node.data)
+        print(spacing[:-1] + "  └Predict:", node.data)
         return
 
     print(spacing + str(node.data))
 
-    print(spacing + "--> True:")
-    print_tree(node.left, spacing + " ")
+    print(spacing + "├-> True:")
+    print_tree(node.left, spacing + "|" + " ")
 
-    print(spacing + "--> False:")
-    print_tree(node.right, spacing + " ")
+    print(spacing + "└-> False:")
+    print_tree(node.right, spacing + "  ")
 
 
-def serialize(root: Node) -> str:
-    return str(header) + "\n" + str(root.in_order([]))
+def serialize(root: Node):
+    queue = [root]
+    for node in queue:
+        if not node:
+            continue
+        queue += [node.left, node.right]
+
+    return str(header) + '\n' + ';;'.join(map(lambda item: str(item.data) if item else '#', queue))
 
 
 def tree_to_file(root: Node):
@@ -156,14 +245,16 @@ def deserialize(serie: str) -> Node:
     def parse_list() -> (list, list):
         headers = serie.split("\n")[0].strip("[]").split(", ")
         headers = [n.strip("\'") for n in headers]
-        serie_list = serie.split("\n")[1].strip("[]").split(", ")
+        serie_list = serie.split("\n")[1].split(";;")
         return headers, serie_list
 
     def build_node(val: str):
-        if val.__contains__("{"):
+        if val.__contains__("{") or val.__contains__("}"):
             val = val.strip("{}").replace(' :', '').split(" ")
             thing: Node = Node(val[0].replace(":", "").strip("\'"))
             return thing
+        elif val.__contains__("#"):
+            return None
         else:
             val = val.split(" ")
             item = Node(Question(h.index(val[1]), val[3][:-1]))

@@ -1,4 +1,4 @@
-from MyCode.Node import Node
+from MyCode.Helpers import *
 
 
 class BinarySearchTree(object):
@@ -140,4 +140,12 @@ class BinarySearchTree(object):
         else:
             return []
 
-
+    def ask(self, sample: list):
+        """
+        :param sample:
+        :return: boolean value for the asked data
+        """
+        if self.root:
+            return self.root.ask(sample)
+        else:
+            return False
