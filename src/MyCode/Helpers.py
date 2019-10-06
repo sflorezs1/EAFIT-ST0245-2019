@@ -83,9 +83,6 @@ class Node(object):
             else:
                 return self.right.ask(sample)
         else:
-            if isinstance(self.data, dict):
-                data = self.data.popitem()[0]
-                return data.__contains__('yes')
             return self.data.__contains__('yes')
 
 
@@ -210,19 +207,19 @@ def build_tree(rows: list):
 
 def print_tree(node: Node, spacing: str = ""):
     if isinstance(node, Leaf):
-        print(spacing[:-1] + "  └Predict:", node.predictions)
+        print(spacing[:-1] + "  Predict:", node.predictions)
         return
 
     if node.left is None or node.right is None:
-        print(spacing[:-1] + "  └Predict:", node.data)
+        print(spacing[:-1] + "  Predict:", node.data)
         return
 
     print(spacing + str(node.data))
 
-    print(spacing + "├-> True:")
-    print_tree(node.left, spacing + "|" + " ")
+    print(spacing + "├─> True: ┐ ")
+    print_tree(node.left, spacing + "│" + " ")
 
-    print(spacing + "└-> False:")
+    print(spacing + "└─> False: ┐ ")
     print_tree(node.right, spacing + "  ")
 
 
