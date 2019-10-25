@@ -1,0 +1,7 @@
+Title: Rust Prediction App
+
+Welcome to our Rust Predicting App!
+Do you want to train with a new dataset (.csv file)? Or use an existent model (.tree file)?
+
+Button1: Existent Model //(Camel or Mayus)
+Button2: New Dataset 	//(Camel or Mayus)
