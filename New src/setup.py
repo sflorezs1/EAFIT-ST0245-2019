@@ -8,5 +8,5 @@ setup(
     license='NONE',
     author='sflorezs1',
     author_email='sflorezs1@eafit.edu.co',
-    description=''
+    description='', install_requires=['pandas', 'graphviz', 'numpy']
 )

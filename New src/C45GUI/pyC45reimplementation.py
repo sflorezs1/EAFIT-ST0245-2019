@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import random as rnd
-from C45GUI.Node import Node
+from C45GUI.Node import Node, Decision
 import pickle
 
 targetEntropy = 0
@@ -152,10 +152,11 @@ def get_information_gain(data, column) -> ():
     return best_gain, sets_below[counter], sets_above[counter], split_points[counter]
 
 
-def train(data) -> Node:
+def train(data, tag="a") -> Node:
     """
     Build the tree
     :param data: Data set to train the model
+    :param tag: Name of the node (just for the graphical representation)
     :return: Decision tree for the given dataset
     """
     optimal_gain = -1
@@ -195,20 +196,22 @@ def train(data) -> Node:
     # if they are = 0 it is the stop condition for recursion, and the else block will generate a leaf node for the tree
     if len(best['left']) != 0 and len(best['right']) != 0:
         return Node(column=best['col'], attribute=best['colName'], value=best['split'][1], results=None,
-                    right_child=train(right), left_child=train(left))
+                    right_child=train(right, tag=tag+"r"), left_child=train(left, tag=tag+"l"), tag=tag)
 
     else:
         label = list(get_unique_classes(data['label']).keys())  # get label for the leaf node
-        return Node(results=label[0])
+        return Node(results=label[0], tag=tag)
 
 
-def classify(target_row, tree):
+def classify(desicion: Decision, tree):
     """
     Traverse the tree to find the leaf node that the target_row will be classified as
-    :param target_row: row of a dataframe that we are classifying
+    :param desicion: A decision set for classifying
     :param tree: decision tree
     :return:
     """
+    target_row = desicion.data
+    desicion.path.append(tree.tag)
     if tree.results is not None:
         return tree.results
 
@@ -225,7 +228,7 @@ def classify(target_row, tree):
             else:
                 branch = tree.left_child
         # recur over the tree again, using either the left or right branch to determine where to go next
-        return classify(target_row, branch)
+        return classify(desicion, branch)
 
 
 def print_tree(tree, spacing=''):
@@ -238,13 +241,13 @@ def print_tree(tree, spacing=''):
         print(spacing[:-1] + "  Predict:" + str(tree.results))
 
     else:
-        print(spacing + str(tree.attribute + " : " + str(tree.value) + " ?"))
+        print(spacing + str(tree.attribute + " >= " + str(tree.value) + " ?"))
 
-        print(spacing + "├─> Left: ┐ ")
-        print_tree(tree.left_child, spacing + "│" + " ")
+        print(spacing + "├─> Right: ┐ ")
+        print_tree(tree.right_child, spacing + "│" + " ")
 
-        print(spacing + "└─> Right: ┐ ")
-        print_tree(tree.right_child, spacing + "  ")
+        print(spacing + "└─> Left: ┐ ")
+        print_tree(tree.left_child, spacing + "  ")
 
 
 def test_tree(data, labels, tree):
