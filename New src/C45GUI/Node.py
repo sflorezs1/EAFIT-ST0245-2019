@@ -15,6 +15,10 @@ class Node(object):
 
 class Decision(object):
 
-    def __init__(self):
-        self.path: [str] = []
-        self.data: [] = []
+    def __init__(self, path=None, data=None):
+        if data is None:
+            data = []
+        if path is None:
+            path = []
+        self.path: [str] = path
+        self.data: [] = data

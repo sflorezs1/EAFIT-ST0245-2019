@@ -24,10 +24,17 @@ class GUI(object):
         self.height = height
         self.canvas = Canvas(self.window, width=self.width, height=self.height, bg="white")
         self.canvas.pack(fill=BOTH, expand=True)
-        self.references = []
+        self.canvas_image = None
+        self.arrows = None
         self.tree = None
 
     def gui_init(self):
+
+        def show_move():
+            self.arrows = PhotoImage(file="Resources/Images/DirArr.png")
+            self.canvas.create_image(self.arrows.width()/2, self.arrows.height(),
+                                     anchor=CENTER, image=self.arrows, tags="arrows")
+            self.canvas.pack(fill=BOTH, expand=True)
 
         def resize(event):
             event.width = event.width if event.width >= 800 else 800
@@ -36,7 +43,6 @@ class GUI(object):
             self.canvas.config(width=w, height=h)
 
         def move(event):
-            """Move the sprite image with a d w and s when click them"""
             if event.keysym == "Right":
                 self.canvas.move("image", -50, 0)
             elif event.keysym == "Left":
@@ -47,25 +53,29 @@ class GUI(object):
                 self.canvas.move("image", 0, 50)
 
         self.canvas.bind("<Configure>", resize)
-        self.window.title('Rust detecting Decision Tree Program')
+        self.canvas_image = PhotoImage(file="Resources/Images/Logo.png")
+        self.canvas.create_image(self.canvas_image.width()/2, self.canvas_image.height()/2,
+                                 anchor=CENTER, image=self.canvas_image, tags="image")
+        self.canvas.pack(fill=BOTH, expand=True)
+        self.window.title('Rust Prediction App')
         frame_1 = Frame(self.window)
         frame_1.pack()
-        welcome_text: str = "Welcome to the program for testing if a coffee plant has rust.\n"
+        welcome_text: str = "Welcome to our Rust Predicting App!\n"
         welcome = Label(frame_1, text=welcome_text, font=("Times New Roman", 14))
         welcome.pack()
-        decision_text: str = "For starters, do you want to train a new model (.csv file)?" \
-                             " or use a existent one (.tree file)?"
+        decision_text: str = "Do you want to train with a new dataset " \
+                             "(.csv file)? Or use an existent model (.tree file)?"
         decision = Label(frame_1, text=decision_text, font=("Times New Roman", 13))
         decision.pack()
 
         def get_data_input():
-            get_input_text: str = "Enter the data for the plant (erase the text in the given text entry).\n"
+            get_input_text: str = "Enter the data for the plant.\n"
             frame_2 = Frame(self.canvas)
             get_input = Label(frame_2, text=get_input_text)
             get_input.grid(row=0)
             # for all features of the coffee plant
             Label(frame_2, text="Insert the data, ").grid(row=1, column=0)
-            Label(frame_2, text="then press the button to execute.").grid(row=2, column=0)
+            Label(frame_2, text="then press 'Calculate' to execute.").grid(row=2, column=0)
             Label(frame_2, text="ph: ").grid(row=1, column=1)
             Label(frame_2, text="soil_temperature: ").grid(row=1, column=2)
             Label(frame_2, text="soil_moisture: ").grid(row=1, column=3)
@@ -75,17 +85,17 @@ class GUI(object):
             Label(frame_2).grid(row=3)
             frame_2.pack(fill=BOTH)
 
-            get_ph = Entry(frame_2)
+            get_ph = Entry(frame_2, width=14)
             get_ph.grid(row=2, column=1)
-            get_soil_temperature = Entry(frame_2)
+            get_soil_temperature = Entry(frame_2, width=14)
             get_soil_temperature.grid(row=2, column=2)
-            get_soil_moisture = Entry(frame_2)
+            get_soil_moisture = Entry(frame_2, width=14)
             get_soil_moisture.grid(row=2, column=3)
-            get_illuminance = Entry(frame_2)
+            get_illuminance = Entry(frame_2, width=14)
             get_illuminance.grid(row=2, column=4)
-            get_env_temperature = Entry(frame_2)
+            get_env_temperature = Entry(frame_2, width=14)
             get_env_temperature.grid(row=2, column=5)
-            get_env_humidity = Entry(frame_2)
+            get_env_humidity = Entry(frame_2, width=14)
             get_env_humidity.grid(row=2, column=6)
 
             def calculate():
@@ -120,9 +130,13 @@ class GUI(object):
 
                 self.render_image()
 
-                rendered_image = PhotoImage(file="Digraph.gv.png")
-                self.references.append(rendered_image)
-                self.canvas.create_image(0, 0, anchor=NW, image=rendered_image, tags="image")
+                self.canvas.delete(self.canvas_image)
+
+                self.canvas_image = PhotoImage(file="Digraph.gv.png")
+                self.canvas.create_image(self.canvas_image.width() / 3, self.canvas_image.height() / 1.5, ancho=CENTER,
+                                         image=self.canvas_image, tags="image")
+                if self.arrows not in self.canvas.children:
+                    show_move()
                 self.canvas.pack(fill=BOTH, expand=True)
 
             calculate_button = Button(frame_2, text="Calculate", command=calculate)
@@ -138,14 +152,14 @@ class GUI(object):
                 self.graph = graphviz.Digraph(comment="Decision Tree Model")
                 self.translate_to_DOT(root)
                 self.render_image()
-                rendered_image = PhotoImage(file="Digraph.gv.png")
-                self.references.append(rendered_image)
-                self.canvas.create_image(0, 0, anchor=NW, image=rendered_image, tags="image")
+                self.canvas.delete(self.canvas_image)
+                self.canvas_image = PhotoImage(file="Digraph.gv.png")
+                self.canvas.create_image(self.canvas_image.width()/3, self.canvas_image.height()/1.5, ancho=CENTER,
+                                         image=self.canvas_image, tags="image")
+                if self.arrows is None:
+                    show_move()
                 self.canvas.pack(fill=BOTH, expand=True)
-
                 self.window.bind('<KeyPress>', move)
-                self.canvas.move(rendered_image, -10, 0)
-                self.image = rendered_image
                 print(self.graph.source)
                 pyC45reimplementation.print_tree(root)
 
@@ -176,16 +190,16 @@ class GUI(object):
                 self.graph = graphviz.Digraph(comment="Decision Tree Model")
                 self.translate_to_DOT(tree)
                 pyC45reimplementation.print_tree(tree)
-
-                self.translate_to_DOT(tree)
                 self.render_image()
-                rendered_image = PhotoImage(file="Digraph.gv.png")
-                self.canvas.create_image(0, 0, anchor=NW, image=rendered_image, tags="image")
+                self.canvas.delete(self.canvas_image)
+                self.canvas_image = PhotoImage(file="Digraph.gv.png")
+                self.canvas.create_image(self.canvas_image.width() / 3, self.canvas_image.height() / 1.5, ancho=CENTER,
+                                         image=self.canvas_image, tags="image")
+                if self.arrows not in self.canvas.children:
+                    show_move()
                 self.canvas.pack(fill=BOTH, expand=True)
 
                 self.window.bind('<KeyPress>', move)
-                self.canvas.move(rendered_image, -10, 0)
-                self.image = rendered_image
                 print(self.graph.source)
                 pyC45reimplementation.print_tree(tree)
 
@@ -207,9 +221,9 @@ class GUI(object):
                     print("Log: File not selected @[" + str(time.perf_counter()) + "]")
                     self.gui_init()
 
-        existent_button = Button(frame_1, text="existent model", command=clicked_existent)
+        existent_button = Button(frame_1, text="Existent Model", font=("Times New Roman", 12), command=clicked_existent)
         existent_button.pack()
-        train_button = Button(frame_1, text="train new model", command=clicked_train)
+        train_button = Button(frame_1, text="New Model", font=("Times New Roman", 12), command=clicked_train)
         train_button.pack()
         self.window.mainloop()
 
@@ -229,12 +243,12 @@ class GUI(object):
                                 color=("crimson" if label.__contains__("no") else "dodgerblue2"),
                                 style="filled", fillcolor=("red" if label.__contains__("no") else "cyan"))
             else:
-                this_info: str = tree.attribute + " : " + str(tree.value) + "?"
+                this_info: str = tree.attribute + " >= " + str(tree.value) + "?"
                 self.graph.node(node_name, this_info, shape="box", color="blueviolet", style="filled", fillcolor="gray")
-                self.translate_to_DOT(tree.right_child, tag=tag + "r")
-                self.graph.edge(node_name, node_name_right, label="True")
                 self.translate_to_DOT(tree.left_child, tag=tag + "l")
                 self.graph.edge(node_name, node_name_left, label="False")
+                self.translate_to_DOT(tree.right_child, tag=tag + "r")
+                self.graph.edge(node_name, node_name_right, label="True")
         else:
             if tree.results is not None:
                 label: str = ""
@@ -260,5 +274,6 @@ class GUI(object):
 
 
 if __name__ == '__main__':
-    gui = GUI(1000, 800)
+    gui = GUI(800, 600)
+    gui.window.minsize(800, 600)
     gui.gui_init()

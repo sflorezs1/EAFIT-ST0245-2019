@@ -262,7 +262,7 @@ def test_tree(data, labels, tree):
     values = []
     # Loop over each row in test data frame and get the classification result for each index
     for index, row in data.iterrows():
-        values.append([index, classify(row, tree)])
+        values.append([index, classify(Decision(data=row), tree)])
 
     # Get the indexes from the test dataframe where each label occurs
     indexes = labels.index.values
@@ -283,10 +283,9 @@ def main():
     # Any dataset can be used, as long as the last column is the result
     # And the columns have headings, with the last column called 'label'
     data_set = pd.read_csv('data_set.csv')
-    # data_set = pd.read_csv('datasets/illness.csv')
 
     results = []
-    tests = 20  # number of times the algorithm will be run (more runs will give a more accurate average accuracy)
+    tests = 2000  # number of times the algorithm will be run (more runs will give a more accurate average accuracy)
     # loop to test the tree. Each loop it:
     # -> generates random data partitions
     # -> generates a decision tree
