@@ -1,8 +1,11 @@
+import time
+
 import pandas as pd
 import numpy as np
 import random as rnd
 from C45GUI.Node import Node, Decision
 import pickle
+
 
 targetEntropy = 0
 
@@ -45,7 +48,7 @@ def get_entropy(data, column):
     """
     gets the information entropy for a column in the dataset
     :param data: dataset to get the entropy for
-    :param column: column currently under inverstigations
+    :param column: column currently under investigations
     :return: entropy: entropy value for the given column
     """
     entropy = 0.0
@@ -285,7 +288,7 @@ def main():
     data_set = pd.read_csv('data_set.csv')
 
     results = []
-    tests = 2000  # number of times the algorithm will be run (more runs will give a more accurate average accuracy)
+    tests = 1  # number of times the algorithm will be run (more runs will give a more accurate average accuracy)
     # loop to test the tree. Each loop it:
     # -> generates random data partitions
     # -> generates a decision tree
@@ -293,9 +296,14 @@ def main():
     # -> gets the accuracy of the decision tree
     # -> gets the average accuracy, over all the iterations
     trees: [Node] = []
+    times = []
+    print_time = []
     for i in range(tests):
         train_data, test_data = partition_data(data_set, 0.3)  # random partitions
+        initial_time = time.perf_counter()
         tree = train(train_data)  # make tree
+        final_time = time.perf_counter()
+        times.append(final_time - initial_time)
         trees.append(tree)
         types = test_data['label']  # get labels column from test_data
         del test_data['label']  # deletes labels from test_data so it cannot be used in classification
@@ -306,8 +314,11 @@ def main():
         # print information to console
         print("Test " + str(i + 1) + "\n------------")
         print("Tree Generated:" + "\n")
-        print_tree(tree)
         print()
+        initial_time = time.perf_counter()
+        print_tree(tree)
+        final_time = time.perf_counter()
+        print_time.append(final_time - initial_time)
         print("Correctly Classified: " + str(correct) + " / " + str(correct + incorrect))
         print("Accuracy: " + str(accuracy))
         print()
@@ -322,6 +333,12 @@ def main():
     print(average)
     print("Best run: " + str(max(results)))
     print("Worst run: " + str(min(results)))
+    print("best time train: " + str(min(times)))
+    print("Worst time train: " + str(max(times)))
+    print("Mean time train: " + str(sum(times) / len(times)))
+    print("best time draw: " + str(min(print_time)))
+    print("Worst time draw: " + str(max(print_time)))
+    print("Mean time draw: " + str(sum(print_time) / len(print_time)))
     save_model(trees[results.index(max(results))], "Model.tree")
 
 

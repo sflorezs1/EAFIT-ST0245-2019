@@ -3,12 +3,11 @@ from tkinter import *
 from tkinter.filedialog import askopenfilename
 import time
 import pandas as pd
-from C45GUI import pyC45reimplementation, Node
+from C45GUI import C45
+from C45 import Node  # this is for unpickling the tree
 from tkinter import messagebox
 import graphviz
 import os
-
-from C45GUI.Node import Decision
 
 os.environ["PATH"] += os.pathsep + 'Graphviz2.38\\bin'  # Add the Graphviz binaries to the PATH
                                                         # (This may not work outside Windows)
@@ -122,7 +121,7 @@ class GUI(object):
                 Classify a plant with the given user input
                 :return:
                 """
-                plant: Decision = Decision()
+                plant: C45.Decision = C45.Decision()
 
                 def gather_data():
                     """
@@ -150,7 +149,7 @@ class GUI(object):
 
                 gather_data()
 
-                pyC45reimplementation.classify(plant, self.tree)  # classify the given data
+                C45.classify(plant, self.tree)  # classify the given data
 
                 self.graph = graphviz.Digraph(comment="Decision Tree Model")
                 self.translate_to_DOT(self.tree, decision=plant)  # generate a DOT with a path
@@ -178,7 +177,7 @@ class GUI(object):
                 frame_1.destroy()  # Destroy the asking file frame
                 filename = askopenfilename()
 
-                tree: Node = pyC45reimplementation.load_model(filename)  # load trained model
+                tree: C45.Node = C45.load_model(filename)  # load trained model
                 self.tree = tree  # save reference to the tree
                 self.graph = graphviz.Digraph(comment="Decision Tree Model")
                 self.translate_to_DOT(self.tree)
@@ -192,7 +191,7 @@ class GUI(object):
                 self.canvas.pack(fill=BOTH, expand=True)
                 self.window.bind('<KeyPress>', move)
                 print(self.graph.source)
-                pyC45reimplementation.print_tree(self.tree)  # Print to console the tree (for debug)
+                C45.print_tree(self.tree)  # Print to console the tree (for debug)
 
                 get_data_input()
             except FileNotFoundError:
@@ -220,11 +219,12 @@ class GUI(object):
             try:
                 frame_1.destroy()  # Destroy the asking file frame
                 filename = askopenfilename()
-                tree: Node = pyC45reimplementation.train(pd.read_csv(filename))  # train a new model for the dataset
+                train_set = C45.partition_data(pd.read_csv(filename), 0.3)
+                tree: C45.Node = C45.train(train_set[0])  # train a new model for the dataset
                 self.tree = tree
                 self.graph = graphviz.Digraph(comment="Decision Tree Model")
                 self.translate_to_DOT(self.tree)
-                pyC45reimplementation.print_tree(self.tree)  # Print to console the tree (for debug)
+                C45.print_tree(self.tree)  # Print to console the tree (for debug)
                 self.render_image()
                 self.canvas.delete(self.canvas_image)  # remove old image from canvas
                 self.canvas_image = PhotoImage(file="Digraph.gv.png")  # Save the image reference
@@ -262,16 +262,16 @@ class GUI(object):
         train_button.pack()
         self.window.mainloop()
 
-    def translate_to_DOT(self, tree: Node, tag: str = "a", decision: Decision = None):
+    def translate_to_DOT(self, tree: C45.Node, tag: str = "a", decision: C45.Decision = None):
         """
-        Translate a Node to DOT notation
-        :param tree: Root node of the tree
-        :param tag: Name of the node (helps keeping track in DOT)
+        Translate a C45.DecisionNode to DOT notation
+        :param tree: Root C45.DecisionNode of the tree
+        :param tag: Name of the C45.DecisionNode (helps keeping track in DOT)
         :param decision: Decision path
         :return:
         """
         if hasattr(tree, "tag"):
-            # Check if the node has a name
+            # Check if the C45.DecisionNode has a name
             # This helps with compatibility with older versions of the program
             node_name: str = tree.tag
         else:
@@ -282,11 +282,11 @@ class GUI(object):
         if decision is None:
             # Check if a Decision has been made, helps with the drawing of the tree with a decision path
             if tree.results is not None:
-                # Check if the node is a leaf
+                # Check if the C45.DecisionNode is a leaf
                 label: str = ""
                 label += tree.results
                 """
-                    Change the color and shape of the node depending on its contents
+                    Change the color and shape of the C45.DecisionNode depending on its contents
                     "yes" : cyan diamond
                     "no" : red square
                 """
@@ -294,20 +294,20 @@ class GUI(object):
                                 color=("crimson" if label.__contains__("no") else "dodgerblue2"),
                                 style="filled", fillcolor=("red" if label.__contains__("no") else "cyan"))
             else:
-                this_info: str = tree.attribute + " >= " + str(tree.value) + "?"  # info to be displayed in the node
+                this_info: str = tree.attribute + " >= " + str(tree.value) + "?"  # info to be displayed in the C45.DecisionNode
                 self.graph.node(node_name, this_info, shape="box",
-                                color="blueviolet", style="filled", fillcolor="gray")  # current node
+                                color="blueviolet", style="filled", fillcolor="gray")  # current C45.DecisionNode
                 self.translate_to_DOT(tree.left_child, tag=tag + "l")  # left child / false path
-                self.graph.edge(node_name, node_name_left, label="False")  # link left node to its parent
+                self.graph.edge(node_name, node_name_left, label="False")  # link left C45.DecisionNode to its parent
                 self.translate_to_DOT(tree.right_child, tag=tag + "r")  # right child / true path
-                self.graph.edge(node_name, node_name_right, label="True")  # link node to its parent
+                self.graph.edge(node_name, node_name_right, label="True")  # link C45.DecisionNode to its parent
         else:
             if tree.results is not None:
-                # Check if the node is a leaf
+                # Check if the C45.DecisionNode is a leaf
                 label: str = ""
                 label += tree.results
                 """
-                    Change the color and shape of the node depending on its contents
+                    Change the color and shape of the C45.DecisionNode depending on its contents
                     "yes" and not in Decision path : cyan diamond
                     "yes" or "no" and in Decision path : green star
                     "no" and not in Decision path : red square
@@ -319,13 +319,13 @@ class GUI(object):
                                 style="filled", fillcolor=("green" if node_name in decision.path else
                                                            "red" if label.__contains__("no") else "cyan"))
             else:
-                this_info: str = tree.attribute + " >= " + str(tree.value) + "?"  # info to be displayed in the node
+                this_info: str = tree.attribute + " >= " + str(tree.value) + "?"  # info to be displayed in the C45.DecisionNode
                 self.graph.node(node_name, this_info, shape="box", color="blueviolet", style="filled",
-                                fillcolor=("green" if node_name in decision.path else "gray"))  # current node
+                                fillcolor=("green" if node_name in decision.path else "gray"))  # current C45.DecisionNode
                 self.translate_to_DOT(tree.left_child, decision=decision, tag=tag + "l")  # left child / false path
-                self.graph.edge(node_name, node_name_left, label="False")  # link left node to its parent
+                self.graph.edge(node_name, node_name_left, label="False")  # link left C45.DecisionNode to its parent
                 self.translate_to_DOT(tree.right_child, decision=decision, tag=tag + "r")  # right child / true path
-                self.graph.edge(node_name, node_name_right, label="True")  # link node to its parent
+                self.graph.edge(node_name, node_name_right, label="True")  # link C45.DecisionNode to its parent
 
     def render_image(self):
         """
