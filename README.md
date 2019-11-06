@@ -8,5 +8,5 @@ Universidad EAFIT
 
 # How to open:
 
-Install all needed libraries in needed by setup.py, and run main at GUI.py
+Install all the libraries needed by setup.py, and run main at GUI.py
 
